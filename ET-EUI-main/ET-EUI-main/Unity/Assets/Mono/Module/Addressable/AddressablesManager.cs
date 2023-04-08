@@ -16,9 +16,7 @@ namespace AssetBundles
     public class AddressablesManager
     {
         public static AddressablesManager Instance { get; private set; } = new AddressablesManager();
-
-        private AssetBundle configBundle;
-
+        
         //存放的是通过LoadAssetAsync加载的资源( 通俗的讲就是不带皮肤label的资源)
         //key为返回的unity asset, value代表这个asset被load了多少次，每一次都会返回一个handle
         Dictionary<Object, int> dictAssetCaching = new Dictionary<Object, int>();
@@ -148,14 +146,7 @@ namespace AssetBundles
             }
             Debug.Log("ClearAssetsCache Over");
         }
-        /// <summary>
-        /// 清除配置ab包
-        /// </summary>
-        public void ClearConfigCache()
-        {
-            configBundle?.Unload(true);
-            configBundle = null;
-        }
+
         public void ReleaseAsset(Object go)
         {
             if (go==null)
@@ -169,7 +160,9 @@ namespace AssetBundles
             if (dictAssetCaching.TryGetValue(go, out int refCount))
             {
                 found = true;
+                Debug.Log("开始卸载包：" + go.name);
                 Addressables.Release(go);
+                Debug.Log("完成卸载包：" + go.name);
                 refCount = refCount - 1;
                 if (refCount == 0)
                 {
