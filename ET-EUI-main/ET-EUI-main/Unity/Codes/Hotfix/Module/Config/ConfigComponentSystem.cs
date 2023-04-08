@@ -27,7 +27,7 @@ namespace ET
 	{
 		public static void LoadOneConfig(this ConfigComponent self, Type configType)
 		{
-			byte[] oneConfigBytes = self.ConfigLoader.GetOneConfigBytes(configType.FullName);
+			byte[] oneConfigBytes = self.ConfigLoader.GetOneConfigBytes(configType.Name);
 
 			object category = ProtobufHelper.FromBytes(configType, oneConfigBytes, 0, oneConfigBytes.Length);
 

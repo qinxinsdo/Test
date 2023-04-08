@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AddressableAssets;
 
 namespace ET
 {
@@ -62,14 +63,9 @@ namespace ET
 			{
 				case CodeMode.Mono:
 				{
-					(AssetBundle assetsBundle, Dictionary<string, UnityEngine.Object> dictionary) = AssetsBundleHelper.LoadBundle("code.unity3d");
-					byte[] assBytes = ((TextAsset)dictionary["Code.dll"]).bytes;
-					byte[] pdbBytes = ((TextAsset)dictionary["Code.pdb"]).bytes;
-					
-					if (assetsBundle != null)
-					{
-						assetsBundle.Unload(true);	
-					}
+					TextAsset ta = Addressables.LoadAssetAsync<TextAsset>("Code.dll").WaitForCompletion();
+					byte[] assBytes = ta.bytes;
+					byte[] pdbBytes = ta.bytes;
 					
 					assembly = Assembly.Load(assBytes, pdbBytes);
 					foreach (Type type in this.assembly.GetTypes())
@@ -83,19 +79,12 @@ namespace ET
 				}
 				case CodeMode.ILRuntime:
 				{
-					(AssetBundle assetsBundle, Dictionary<string, UnityEngine.Object> dictionary) = AssetsBundleHelper.LoadBundle("code.unity3d");
-					byte[] assBytes = ((TextAsset)dictionary["Code.dll"]).bytes;
-					byte[] pdbBytes = ((TextAsset)dictionary["Code.pdb"]).bytes;
+					TextAsset ta = Addressables.LoadAssetAsync<TextAsset>("Code.dll").WaitForCompletion();
+					byte[] assBytes = ta.bytes;
+					byte[] pdbBytes = ta.bytes;
 					
-					if (assetsBundle != null)
-					{
-						assetsBundle.Unload(true);	
-					}
-					
-					//byte[] assBytes = File.ReadAllBytes(Path.Combine("../Unity/", Define.BuildOutputDir, "Code.dll"));
-					//byte[] pdbBytes = File.ReadAllBytes(Path.Combine("../Unity/", Define.BuildOutputDir, "Code.pdb"));
-				
-					appDomain = new ILRuntime.Runtime.Enviorment.AppDomain(ILRuntime.Runtime.ILRuntimeJITFlags.JITOnDemand);
+					// appDomain = new ILRuntime.Runtime.Enviorment.AppDomain(ILRuntime.Runtime.ILRuntimeJITFlags.JITOnDemand);
+					appDomain = new ILRuntime.Runtime.Enviorment.AppDomain();
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
 					this.appDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif

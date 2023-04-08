@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using AssetBundles;
 using UnityEngine;
 
 namespace ET
-{
-       public class ConfigLoader: IConfigLoader
-    {
+{ 
+    public class ConfigLoader: IConfigLoader {
+           
         public void GetAllConfigBytes(Dictionary<string, byte[]> output)
         {
-            Dictionary<string, UnityEngine.Object> keys = ResourcesComponent.Instance.GetBundleAll("config.unity3d");
+            Dictionary<string, TextAsset> keys = AddressablesManager.Instance.LoadAllTextAsset();
 
             foreach (var kv in keys)
             {
@@ -16,10 +17,10 @@ namespace ET
                 output[key] = v.bytes;
             }
         }
-
+        
         public byte[] GetOneConfigBytes(string configName)
         {
-            TextAsset v = ResourcesComponent.Instance.GetAsset("config.unity3d", configName) as TextAsset;
+            TextAsset v = AddressablesManager.Instance.LoadTextAsset(configName) as TextAsset;
             return v.bytes;
         }
     }

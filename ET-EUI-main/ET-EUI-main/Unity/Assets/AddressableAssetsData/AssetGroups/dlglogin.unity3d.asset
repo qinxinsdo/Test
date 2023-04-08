@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: dlglogin.unity3d
+  m_EditorClassIdentifier: 
+  m_GroupName: dlglogin.unity3d
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 82b877de6b4f654469ece449ae1a850c
+  m_SerializeEntries:
+  - m_GUID: a87e203f6599b18489cb615ec32b682d
+    m_Address: DlgLogin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9b70f54ebc4b13f41b25b3c67c9e5030, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5590b4b598844c340963348ed0052a0e, type: 2}
+    - {fileID: 11400000, guid: 8d3b5fc69d4a0e14d90eff47b8740b6c, type: 2}
