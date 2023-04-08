@@ -9,6 +9,7 @@ using Image = UnityEngine.UI.Image;
 
 namespace ET
 {
+    [FriendClass(typeof(ResourcesComponent))]
     public static class IconHelper
     {
         /// <summary>
@@ -45,7 +46,7 @@ namespace ET
         {
             try
             {
-                SpriteAtlas spriteAtlas = ResourcesComponent.Instance.AddressablesManager.LoadAssetAsyncObject<SpriteAtlas>(atlasName);
+                SpriteAtlas spriteAtlas = await ResourcesComponent.Instance.LoadAsync<SpriteAtlas>(atlasName);
                 Sprite sprite = spriteAtlas.GetSprite(spriteName);
                 if (null == sprite)
                 {

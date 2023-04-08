@@ -28,6 +28,7 @@ namespace ET
     [FriendClass(typeof(UIPathComponent))]
     [FriendClass(typeof(UIBaseWindow))]
     [FriendClass(typeof(UIComponent))]
+    [FriendClass(typeof(ResourcesComponent))]
     public static class UIComponentSystem
     {
         public static void Awake(this UIComponent self)
@@ -515,7 +516,7 @@ namespace ET
                 Log.Error($"{baseWindow.WindowID} is not Exist!");
                 return;
             }
-            GameObject go                      = ResourcesComponent.Instance.AddressablesManager.LoadAssetAsyncObject<GameObject>(value);;
+            GameObject go                      = await ResourcesComponent.Instance.LoadAsync<GameObject>(value);
             baseWindow.UIPrefabGameObject      = UnityEngine.Object.Instantiate(go);
             baseWindow.UIPrefabGameObject.name = go.name;
             
