@@ -16,8 +16,6 @@ Opt/
 
 */.svn/
 .svn/
-bin/
-Bin/
 obj/
 _ReSharper.CSharp/
 *.opensdf
