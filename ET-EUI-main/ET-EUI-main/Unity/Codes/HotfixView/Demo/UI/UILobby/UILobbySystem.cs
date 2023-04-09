@@ -25,8 +25,8 @@ namespace ET
 		
 		public static async ETTask OnEnterMapClickHandler(this UILobby self)
 		{
-			await self.ZoneScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Helper);
-			// await EnterMapHelper.EnterMapAsync(self.ZoneScene());
+			// await self.ZoneScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Helper);
+			await EnterMapHelper.EnterMapAsync(self.ZoneScene());
 			self.ZoneScene().GetComponent<UIComponent>().CloseWindow(WindowID.WindowID_Lobby);
 			
 		}

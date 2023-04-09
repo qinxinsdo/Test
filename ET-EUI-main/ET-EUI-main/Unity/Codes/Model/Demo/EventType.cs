@@ -83,7 +83,12 @@ namespace ET
         {
             public Scene Scene;
         }
-
+        
+        public struct LoadingProgress
+        {
+            public float Progress;
+        }
+        
         public struct LoadingFinish
         {
             public Scene Scene;
@@ -94,6 +99,7 @@ namespace ET
             public Scene ZoneScene;
         }
 
+        
         public struct AfterUnitCreate
         {
             public Unit Unit;

@@ -15,10 +15,18 @@
             // 可以订阅这个事件中创建Loading界面
             Game.EventSystem.Publish(new EventType.SceneChangeStart() {ZoneScene = zoneScene});
 
-            // 等待CreateMyUnit的消息
-            WaitType.Wait_CreateMyUnit waitCreateMyUnit = await zoneScene.GetComponent<ObjectWait>().Wait<WaitType.Wait_CreateMyUnit>();
-            M2C_CreateMyUnit m2CCreateMyUnit = waitCreateMyUnit.Message;
-            Unit unit = UnitFactory.Create(currentScene, m2CCreateMyUnit.Unit);
+            UnitInfo uninfo = new UnitInfo();
+            uninfo.UnitId = 1001;
+            uninfo.ConfigId = 1;
+            uninfo.X = 2;
+            uninfo.Y = 2;
+            uninfo.Z = 2;
+            
+            uninfo.ForwardX = 2;
+            uninfo.ForwardY = 2;
+            uninfo.ForwardZ = 2;
+            
+            Unit unit = UnitFactory.Create(currentScene, uninfo);
             unitComponent.Add(unit);
             
             zoneScene.RemoveComponent<AIComponent>();
@@ -28,5 +36,6 @@
             // 通知等待场景切换的协程
             zoneScene.GetComponent<ObjectWait>().Notify(new WaitType.Wait_SceneChangeFinish());
         }
+        
     }
 }

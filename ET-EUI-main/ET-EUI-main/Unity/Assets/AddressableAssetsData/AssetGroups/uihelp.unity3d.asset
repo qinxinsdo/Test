@@ -16,11 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 391b4458fe9286d47b2f58ab32b944e8
-  m_SerializeEntries:
-  - m_GUID: c54e8d9624286b24fa23519e5df2ed0a
-    m_Address: Assets/Bundles/UI/UIHelp.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b70f54ebc4b13f41b25b3c67c9e5030, type: 2}
   m_SchemaSet:
