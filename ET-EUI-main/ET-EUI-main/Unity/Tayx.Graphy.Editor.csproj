@@ -329,6 +329,9 @@
      <Reference Include="ICSharpCode.SharpZipLib">
      <HintPath>D:\workspace\ADemo\Test\ET-EUI-main\ET-EUI-main\Unity\Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
      </Reference>
+     <Reference Include="AmazingAssets.TerrainToMesh">
+     <HintPath>D:\workspace\ADemo\Test\ET-EUI-main\ET-EUI-main\Unity\Assets\Mono\Module\Map\AmazingAssets.TerrainToMesh.dll</HintPath>
+     </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\workspace\ADemo\Test\ET-EUI-main\ET-EUI-main\Unity\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>

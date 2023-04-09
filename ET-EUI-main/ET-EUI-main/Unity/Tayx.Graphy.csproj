@@ -341,6 +341,9 @@
      <Reference Include="ICSharpCode.SharpZipLib">
      <HintPath>D:\workspace\ADemo\Test\ET-EUI-main\ET-EUI-main\Unity\Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
      </Reference>
+     <Reference Include="AmazingAssets.TerrainToMesh">
+     <HintPath>D:\workspace\ADemo\Test\ET-EUI-main\ET-EUI-main\Unity\Assets\Mono\Module\Map\AmazingAssets.TerrainToMesh.dll</HintPath>
+     </Reference>
      <Reference Include="mscorlib">
      <HintPath>D:\Software\Unity2019\2021.3.20f1c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>
      </Reference>

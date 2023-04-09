@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: map1.unity3d
+  m_Name: Packed Assets
   m_EditorClassIdentifier: 
-  m_GroupName: map1.unity3d
+  m_GroupName: Packed Assets
   m_Data:
     m_SerializedData: []
-  m_GUID: 2a2d3d51de82b1a498a99ecb80f23fe8
-  m_SerializeEntries: []
+  m_GUID: bc1030d38dd8dcd429bb1ec8f2f951f7
+  m_SerializeEntries:
+  - m_GUID: 9df61450cc49fb848b3f890f648d3c84
+    m_Address: MapJson
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b70f54ebc4b13f41b25b3c67c9e5030, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 99349fa48c26ca045995e32acf2749d6, type: 2}
-    - {fileID: 11400000, guid: de479e601631c774d8267f54c0556d97, type: 2}
+    - {fileID: 11400000, guid: 53b3acf9320f3e74987c540d9410dddd, type: 2}
+    - {fileID: 11400000, guid: 3f0162d3bf213fb44af9562d6f1344a5, type: 2}

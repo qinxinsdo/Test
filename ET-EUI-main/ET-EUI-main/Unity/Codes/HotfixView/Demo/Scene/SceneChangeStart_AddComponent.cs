@@ -32,6 +32,7 @@ namespace ET
 			
 
             currentScene.AddComponent<OperaComponent>();
+
         }
     }
 }
