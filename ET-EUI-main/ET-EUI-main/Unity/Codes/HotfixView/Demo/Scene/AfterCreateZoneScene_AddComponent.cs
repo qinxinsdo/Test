@@ -10,7 +10,7 @@ namespace ET
             zoneScene.AddComponent<UIEventComponent>();
             zoneScene.AddComponent<RedDotComponent>();
 
-            zoneScene.GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Login);
+            // zoneScene.GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Login);
         }
     }
 }

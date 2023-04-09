@@ -1,0 +1,6 @@
+{"list":[
+{"_t":"WindowConfig","_id":1,"Type":1,"Name":"UILogin","Desc":""},
+{"_t":"WindowConfig","_id":2,"Type":1,"Name":"UILobby","Desc":""},
+{"_t":"WindowConfig","_id":3,"Type":1,"Name":"UIHelp","Desc":""},
+{"_t":"WindowConfig","_id":4,"Type":1,"Name":"UITest","Desc":""},
+]}

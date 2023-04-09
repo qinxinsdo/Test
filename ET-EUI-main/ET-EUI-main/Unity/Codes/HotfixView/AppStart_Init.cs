@@ -31,7 +31,7 @@ namespace ET
             
             Scene zoneScene = SceneFactory.CreateZoneScene(1, "Game", Game.Scene);
             
-            await zoneScene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Helper);
+            // await zoneScene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Helper);
            
             Game.EventSystem.Publish(new EventType.AppStartInitFinish() { ZoneScene = zoneScene });
         }

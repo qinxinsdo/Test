@@ -1,13 +1,10 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using UnityEditor;
 using UnityEngine;
-
-using ET;
-using NUnit.Framework;
 
 public partial class UICodeSpawner
 {
@@ -27,20 +24,6 @@ public partial class UICodeSpawner
 				Debug.LogWarning($"----------开始生成UI：{uiName} 相关代码 ----------");
 				SpawnUICode(gameObject);
 				Debug.LogWarning($"生成UI{uiName} 完毕!!!");
-				return;
-			}
-			else if(uiName.StartsWith(CommonUIPrefix))
-			{
-				Debug.LogWarning($"-------- 开始生成子UI：{uiName} 相关代码 -------------");
-				SpawnSubUICode(gameObject);
-				Debug.LogWarning($"生成子UI：{uiName} 完毕!!!");
-				return;
-			}
-			else if (uiName.StartsWith(UIItemPrefix))
-			{
-				Debug.LogWarning($"-------- 开始生成滚动列表项：{uiName} 相关代码 -------------");
-				SpawnLoopItemCode(gameObject);
-				Debug.LogWarning($" 开始生成滚动列表项：{uiName} 完毕！！！");
 				return;
 			}
 			Debug.LogError($"选择的预设物不属于 UI, 子UI，滚动列表项，请检查 {uiName}！！！！！！");
@@ -76,13 +59,13 @@ public partial class UICodeSpawner
         string strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UI/" + strUIName ;
         
         
-        if ( !System.IO.Directory.Exists(strFilePath) )
+        if ( !Directory.Exists(strFilePath) )
         {
-	        System.IO.Directory.CreateDirectory(strFilePath);
+	        Directory.CreateDirectory(strFilePath);
         }
         
 	    strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UI/" + strUIName + "/" + strUIName + "System.cs";
-        if(System.IO.File.Exists(strFilePath))
+        if(File.Exists(strFilePath))
         {
             Debug.LogError("已存在 " + strUIName + "System.cs,将不会再次生成。");
             return;
@@ -177,13 +160,13 @@ public partial class UICodeSpawner
         string strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UI/" + strUIName + "/Event" ;
         
         
-        if ( !System.IO.Directory.Exists(strFilePath) )
+        if ( !Directory.Exists(strFilePath) )
         {
-	        System.IO.Directory.CreateDirectory(strFilePath);
+	        Directory.CreateDirectory(strFilePath);
         }
         
 	    strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UI/" + strUIName + "/Event/" + strUIName + "EventHandler.cs";
-        if(System.IO.File.Exists(strFilePath))
+        if(File.Exists(strFilePath))
         {
 	        Debug.LogError("已存在 " + strUIName + ".cs,将不会再次生成。");
             return;
@@ -263,13 +246,13 @@ public partial class UICodeSpawner
         string strFilePath = Application.dataPath + "/../Codes/ModelView/Demo/UI/" + strUIName  ;
         
         
-        if ( !System.IO.Directory.Exists(strFilePath) )
+        if ( !Directory.Exists(strFilePath) )
         {
-	        System.IO.Directory.CreateDirectory(strFilePath);
+	        Directory.CreateDirectory(strFilePath);
         }
         
 	    strFilePath = Application.dataPath + "/../Codes/ModelView/Demo/UI/" + strUIName  + "/" + strUIName  + ".cs";
-        if(System.IO.File.Exists(strFilePath))
+        if(File.Exists(strFilePath))
         {
 	        Debug.LogError("已存在 " + strUIName + ".cs,将不会再次生成。");
             return;
@@ -309,9 +292,9 @@ public partial class UICodeSpawner
 
         string strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UIBehaviour/" + strUIName;
 
-        if ( !System.IO.Directory.Exists(strFilePath) )
+        if ( !Directory.Exists(strFilePath) )
         {
-	        System.IO.Directory.CreateDirectory(strFilePath);
+	        Directory.CreateDirectory(strFilePath);
         }
 	    strFilePath = Application.dataPath + "/../Codes/HotfixView/Demo/UIBehaviour/" + strUIName + "/" + strUIComponentName + "System.cs";
 	    
@@ -360,9 +343,9 @@ public partial class UICodeSpawner
 
 
 	    string strFilePath = Application.dataPath + "/../Codes/ModelView/Demo/UIBehaviour/" + strUIName;
-	    if ( !System.IO.Directory.Exists(strFilePath) )
+	    if ( !Directory.Exists(strFilePath) )
 	    {
-		    System.IO.Directory.CreateDirectory(strFilePath);
+		    Directory.CreateDirectory(strFilePath);
 	    }
 	    strFilePath = Application.dataPath + "/../Codes/ModelView/Demo/UIBehaviour/" + strUIName + "/" + strUIComponentName + ".cs";
 	    StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
@@ -415,16 +398,9 @@ public partial class UICodeSpawner
 		    {
 			    Component widget = info;
 			    string strClassType = widget.GetType().ToString();
-		   
-			    if (pair.Key.StartsWith(CommonUIPrefix))
-			    {
-				    strBuilder.AppendFormat("\t\t	{0}.m_{1}?.Dispose();\r\n", pointStr,pair.Key.ToLower());
-				    strBuilder.AppendFormat("\t\t	{0}.m_{1} = null;\r\n", pointStr,pair.Key.ToLower());
-				    continue;
-			    }
 			    
 			    string widgetName = widget.name + strClassType.Split('.').ToList().Last();
-			    strBuilder.AppendFormat("\t\t	{0}.m_{1} = null;\r\n", pointStr,widgetName);
+			    strBuilder.AppendFormat("\t\t	{0}.{1} = null;\r\n", pointStr,widgetName);
 		    }
 		 
 	    }
@@ -443,17 +419,6 @@ public partial class UICodeSpawner
 				string strClassType = widget.GetType().ToString();
 				string strInterfaceType = strClassType;
 				
-				if (pair.Key.StartsWith(CommonUIPrefix))
-				{
-					var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
-					if (subUIClassPrefab==null)
-					{
-						Debug.LogError($"公共UI找不到所属的Prefab! {pair.Key}");
-						return;
-					}
-					GetSubUIBaseWindowCode(ref strBuilder, pair.Key,strPath,subUIClassPrefab.name);
-					continue;
-				}
 				string widgetName = widget.name + strClassType.Split('.').ToList().Last();
 				
 				
@@ -468,29 +433,11 @@ public partial class UICodeSpawner
 				strBuilder.AppendLine("     				return null;");
 				strBuilder.AppendLine("     			}");
 
-				if (transRoot.gameObject.name.StartsWith(UIItemPrefix))
-				{
-					strBuilder.AppendLine("     			if (this.isCacheNode)");
-					strBuilder.AppendLine("     			{");
-					strBuilder.AppendFormat("     				if( this.m_{0} == null )\n" , widgetName);
-					strBuilder.AppendLine("     				{");
-					strBuilder.AppendFormat("		    			this.m_{0} = UIFindHelper.FindDeepChild<{2}>(this.uiTransform.gameObject,\"{1}\");\r\n", widgetName, strPath, strInterfaceType);
-					strBuilder.AppendLine("     				}");
-					strBuilder.AppendFormat("     				return this.m_{0};\n" , widgetName);
-					strBuilder.AppendLine("     			}");
-					strBuilder.AppendLine("     			else");
-					strBuilder.AppendLine("     			{");
-					strBuilder.AppendFormat("		    		return UIFindHelper.FindDeepChild<{2}>(this.uiTransform.gameObject,\"{1}\");\r\n", widgetName, strPath, strInterfaceType);
-					strBuilder.AppendLine("     			}");
-				}
-				else
-				{
-					strBuilder.AppendFormat("     			if( this.m_{0} == null )\n" , widgetName);
-					strBuilder.AppendLine("     			{");
-					strBuilder.AppendFormat("		    		this.m_{0} = UIFindHelper.FindDeepChild<{2}>(this.uiTransform.gameObject,\"{1}\");\r\n", widgetName, strPath, strInterfaceType);
-					strBuilder.AppendLine("     			}");
-					strBuilder.AppendFormat("     			return this.m_{0};\n" , widgetName);
-				}
+				strBuilder.AppendFormat("     			if( this.{0} == null )\n" , widgetName);
+				strBuilder.AppendLine("     			{");
+				strBuilder.AppendFormat("		    		this.{0} = UIFindHelper.FindDeepChild<{2}>(this.uiTransform.gameObject,\"{1}\");\r\n", widgetName, strPath, strInterfaceType);
+				strBuilder.AppendLine("     			}");
+				strBuilder.AppendFormat("     			return this.{0};\n" , widgetName);
 				
 	            strBuilder.AppendLine("     		}");
 	            strBuilder.AppendLine("     	}\n");
@@ -506,22 +453,9 @@ public partial class UICodeSpawner
 		    {
 			    Component widget = info;
 			    string strClassType = widget.GetType().ToString();
-
-			    if ( pair.Key.StartsWith(CommonUIPrefix))
-			    {
-				    var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
-				    if (subUIClassPrefab==null)
-				    {
-					    Debug.LogError($"公共UI找不到所属的Prefab! {pair.Key}");
-					    return;
-				    }
-				    string subUIClassType = subUIClassPrefab.name;
-				    strBuilder.AppendFormat("\t\tprivate {0} m_{1} = null;\r\n", subUIClassType, pair.Key.ToLower());
-				    continue;
-			    }
-
-			     string widgetName = widget.name + strClassType.Split('.').ToList().Last();
-			    strBuilder.AppendFormat("\t\tprivate {0} m_{1} = null;\r\n", strClassType, widgetName);
+			    
+			    string widgetName = widget.name + strClassType.Split('.').ToList().Last();
+			    strBuilder.AppendFormat("\t\tprivate {0} {1} = null;\r\n", strClassType, widgetName);
 		    }
 		    
 	    }
@@ -539,14 +473,7 @@ public partial class UICodeSpawner
 			string strTemp = strPath+"/"+child.name;
 			
 		
-			bool isSubUI = child.name.StartsWith(CommonUIPrefix);
-			if (isSubUI || child.name.StartsWith(UIGameObjectPrefix))
-			{
-				List<Component> rectTransfomrComponents = new List<Component>(); 
-				rectTransfomrComponents.Add(child.GetComponent<RectTransform>());
-				Path2WidgetCachedDict.Add(child.name,rectTransfomrComponents);
-			}
-			else if (child.name.StartsWith(UIWidgetPrefix))
+			if (child.name.StartsWith(UIWidgetPrefix))
 			{
 				foreach (var uiComponent in WidgetInterfaceList)
 				{
@@ -567,12 +494,7 @@ public partial class UICodeSpawner
 					Path2WidgetCachedDict.Add(child.name, componentsList);
 				}
 			}
-		
-			if (isSubUI)
-			{
-				Debug.Log($"遇到子UI：{child.name},不生成子UI项代码");
-				continue;
-			}
+			
 			FindAllWidgets(child, strTemp);
 		}
 	}
@@ -588,36 +510,7 @@ public partial class UICodeSpawner
         }
         return path;
     }
-
-
-    static void GetSubUIBaseWindowCode(ref StringBuilder strBuilder,string widget,string strPath, string subUIClassType)
-    {
-	    
-	    strBuilder.AppendFormat("		public {0} {1}\r\n", subUIClassType, widget );
-	    strBuilder.AppendLine("     	{");
-	    strBuilder.AppendLine("     		get");
-	    strBuilder.AppendLine("     		{");
-			
-	    strBuilder.AppendLine("     			if (this.uiTransform == null)");
-	    strBuilder.AppendLine("     			{");
-	    strBuilder.AppendLine("     				Log.Error(\"uiTransform is null.\");");
-	    strBuilder.AppendLine("     				return null;");
-	    strBuilder.AppendLine("     			}");
-	    
-	    strBuilder.AppendFormat("     			if( this.m_{0} == null )\n" , widget.ToLower());
-	    strBuilder.AppendLine("     			{");
-	    strBuilder.AppendFormat("		    	   Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject,\"{0}\");\r\n",  strPath);
-	    strBuilder.AppendFormat("		    	   this.m_{0} = this.AddChild<{1},Transform>(subTrans);\r\n", widget.ToLower(),subUIClassType);
-	    strBuilder.AppendLine("     			}");
-	    strBuilder.AppendFormat("     			return this.m_{0};\n" , widget.ToLower());
-	    strBuilder.AppendLine("     		}");
-	    
-	    
-	    
-	    strBuilder.AppendLine("     	}\n");
-    }
     
-
     static UICodeSpawner()
     {
         WidgetInterfaceList = new List<string>();        
@@ -643,10 +536,7 @@ public partial class UICodeSpawner
 
     private static Dictionary<string, List<Component> > Path2WidgetCachedDict =null;
     private static List<string> WidgetInterfaceList = null;
-    private const string CommonUIPrefix = "COM";
     private const string UIPanelPrefix  = "UI";
     private const string UIWidgetPrefix = "m_";
-    private const string UIGameObjectPrefix = "EG";
-    private const string UIItemPrefix = "Item";
 }
 
