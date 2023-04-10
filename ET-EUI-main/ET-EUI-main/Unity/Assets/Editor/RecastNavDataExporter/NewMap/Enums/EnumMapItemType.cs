@@ -1,0 +1,1 @@
+namespace Game{	/// <summary>	/// 地图物体类型	/// <summary>	public enum EnumMapItemType	{		/// <summary>		/// 无		/// <summary>		None = 0,		/// <summary>		/// 地形物体		/// <summary>		Terrain = 1,		/// <summary>		/// 场景物体		/// <summary>		SceneItem = 2,	}}
